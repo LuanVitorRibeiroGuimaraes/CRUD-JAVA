@@ -11,10 +11,10 @@ public class Main {
         ContatoDAO contatoDao = new ContatoDAO();
 
         Contato contato = new Contato();
-        contato.setNome("Cleitin Jovem Tranquilo");
-        contato.setIdade(24);
+        contato.setNome("Idalia");
+        contato.setIdade(64);
         contato.setDataCadastro(new Date());
 
-        contatoDao.save(contato);
+        contatoDao.save(contato); 
     }
 }
