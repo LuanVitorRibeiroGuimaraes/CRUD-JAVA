@@ -3,10 +3,9 @@ package dao;
 import factory.ConnectionFactory;
 import model.Contato;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 //fazer com que o java se molde a uma estrutura relacional que é o banco
 
@@ -20,6 +19,7 @@ public class ContatoDAO {
     * d: DELETE
      */
 
+    //insert
     public void save(Contato contato){
 
         String sql = "INSERT INTO contatos(nome, idade, datacadastro) VALUES (?, ?, ?)";
@@ -57,5 +57,57 @@ public class ContatoDAO {
                 System.out.println("Erro: " + e.getMessage());
             }
         }
+    }
+
+    //read listando os contatos do banco de dados
+    public List<Contato> getContatos() throws SQLException {
+        String sql = "SELECT * FROM contatos";
+
+        //instanciando o List com ArrayList
+        List<Contato> contatos = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        //classe que vai recuperar os dados do banco  ****SELECT****;
+        ResultSet rst = null;
+
+        try{
+            conn = ConnectionFactory.createConnectionToMySQL(); //criando a conexão com o banco
+
+            //conn é uma Connection, por isso é feito o casting
+            pstm = conn.prepareStatement(sql);
+
+            rst = pstm.executeQuery();
+
+            //enquanto estiver dado para percorrer, ele irá continuar no while
+            while(rst.next()){
+
+                Contato contato = new Contato();
+
+                //recuperar o id
+                contato.setId(rst.getInt("id"));
+                //recuperar o nome
+                contato.setNome(rst.getString("nome"));
+                //recuperar a idade
+                contato.setIdade(rst.getInt("idade"));
+                //recuperar a data de cadastro
+                contato.setDataCadastro(rst.getDate("dataCadastro"));
+
+                //adicionando tudo isso na List contato;
+                contatos.add(contato);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+        } finally {
+            if (rst != null){
+                rst.close();
+            } if (pstm != null){
+                pstm.close();
+            } if(conn != null){
+                conn.close();
+            }
+        }
+        return contatos;
     }
 }
