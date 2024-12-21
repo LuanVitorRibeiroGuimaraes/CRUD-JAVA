@@ -20,6 +20,31 @@ public class ContatoDAO {
      */
 
     //insert
+
+    public void delelte(int id) throws SQLException{
+        String sql = "DELETE * FROM contatos WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+            pstm = conn.prepareCall(sql);
+            pstm.setInt(1, id);
+
+            pstm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+                if (pstm != null) {
+                    pstm.close();
+            } if(conn != null){
+                    conn.close();
+            } 
+            
+        }
+    }
+
     public void save(Contato contato){
 
         String sql = "INSERT INTO contatos(nome, idade, datacadastro) VALUES (?, ?, ?)";
@@ -61,7 +86,7 @@ public class ContatoDAO {
     }
 
     public void update(Contato contato){
-        String sql = "UPDADE contatos SET name = ?, idade = ?, dataCadastro = ?, WHERE id = ?";
+        String sql = "UPDATE contatos SET name = ?, idade = ?, dataCadastro = ? WHERE id = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -77,7 +102,7 @@ public class ContatoDAO {
             //adicionar os valores para atualizar
             pstm.setString(1, contato.getNome());
             pstm.setInt(2, contato.getIdade());
-            pstm.setDate(3, new Date(contato.getDataCadastro()).getTime());
+            pstm.setDate(3, new Date(contato.getDataCadastro().getTime()));
 
             //qual o id do registro que deseja atualizar
             pstm.setInt(4, contato.getId());
@@ -96,29 +121,6 @@ public class ContatoDAO {
             } catch (SQLException e) {
                 System.out.println("Erro: " + e.getMessage());
             }
-        }
-    }
-
-    public void delelte() throws SQLException {
-        String sql = "DELETE * FROM contatos WHERE id = ?";
-        Connection conn = null;
-        PreparedStatement pstm = null;
-
-        try {
-            conn = ConnectionFactory.createConnectionToMySQL();
-            pstm = conn.prepareStatement(sql);
-            pstm.setInt(1, id);
-            pstm.executeUpdate();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pstm != null) {
-                pstm.close();
-            } if(conn != null){
-                conn.close();
-            } catch (SQLException e) {
-                System.out.println("Erro: " + e.getMessage());
         }
     }
 

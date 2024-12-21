@@ -12,14 +12,15 @@ public class Main {
         ContatoDAO contatoDao = new ContatoDAO();
 
         Contato contato = new Contato();
-        contato.setNome("Luan");
-        contato.setIdade(0);
+        contato.setNome("Luan Vitor");
+        contato.setIdade(20);
         contato.setDataCadastro(new Date());
 
         contatoDao.save(contato);
         
         //vizualização dos registros do banco de dados TODOS
 
+        /*
         for(Contato c : contatoDao.getContatos()){
             System.out.println("Contatos: " + c.getNome());
         }
@@ -34,8 +35,6 @@ public class Main {
         //contatoDao.update(c1);
 
         //deletar o contato pelo id
-        contatoDao.delelte(15);
-
-
+        contatoDao.delelte(15);*/
     }
 }
