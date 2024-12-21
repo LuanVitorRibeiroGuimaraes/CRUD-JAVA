@@ -99,6 +99,29 @@ public class ContatoDAO {
         }
     }
 
+    public void delelte() throws SQLException {
+        String sql = "DELETE * FROM contatos WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            pstm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pstm != null) {
+                pstm.close();
+            } if(conn != null){
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
     //read listando os contatos do banco de dados
     public List<Contato> getContatos() throws SQLException {
         String sql = "SELECT * FROM contatos";
