@@ -2,6 +2,7 @@ package factory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class ConnectionFactory {
 
@@ -16,7 +17,7 @@ public class ConnectionFactory {
      *Conexão com o banco de dados
      */
 
-    public static Connection createConnectionToMySQL() throws Exception{
+     public static Connection createConnectionToMySQL() throws Exception{
         //Faz com que a classe seja carregada pela JVM
         Class.forName("com.mysql.cj.jdbc.Driver");
 

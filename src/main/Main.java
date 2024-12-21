@@ -11,12 +11,13 @@ public class Main {
 
         ContatoDAO contatoDao = new ContatoDAO();
 
-        Contato contato = new Contato();
-        contato.setNome("Idalia");
-        contato.setIdade(64);
+        /*Contato contato = new Contato();
+        contato.setNome("Jarbas");
+        contato.setIdade(0);
         contato.setDataCadastro(new Date());
 
-        contatoDao.save(contato);
+        contatoDao.save(contato);*/
+        
         //vizualização dos registros do banco de dados TODOS
 
         for(Contato c : contatoDao.getContatos()){

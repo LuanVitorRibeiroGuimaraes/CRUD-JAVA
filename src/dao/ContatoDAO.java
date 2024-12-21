@@ -29,6 +29,7 @@ public class ContatoDAO {
 
         try {
             //Criar uma conexão com o banco de dados
+            //conn = ConnectionFactory.createConnectionToMySQL();
             conn = ConnectionFactory.createConnectionToMySQL();
 
             //Criamos uma PreparedStatement, para executar uma query
@@ -51,6 +52,45 @@ public class ContatoDAO {
                     pstm.close();
                 }
                 if (conn != null){
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Erro: " + e.getMessage());
+            }
+        }
+    }
+
+    public void update(Contato contato){
+        String sql = "UPDADE contatos SET name = ?, idade = ?, dataCadastro = ?, WHERE id = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+
+        try{
+            //criar conexão com o banco
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            //criar a classe para executar a query
+            pstm = conn.prepareCall(sql);
+
+            //adicionar os valores para atualizar
+            pstm.setString(1, contato.getNome());
+            pstm.setInt(2, contato.getIdade());
+            pstm.setDate(3, new Date(contato.getDataCadastro()).getTime());
+
+            //qual o id do registro que deseja atualizar
+            pstm.setInt(4, contato.getId());
+
+            //executar a query
+            pstm.executeUpdate(sql);
+        } catch (Exception e){
+            System.out.println("Erro: " + e.getMessage());
+        } finally {
+            try{
+                if (pstm != null){
+                    pstm.close();
+                } if(conn != null){
                     conn.close();
                 }
             } catch (SQLException e) {
