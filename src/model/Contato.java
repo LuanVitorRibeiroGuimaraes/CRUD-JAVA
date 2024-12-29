@@ -33,7 +33,7 @@ public class Contato {
     }
 
     public Date getDataCadastro() {
-        return dataCadastro;
+        return this.dataCadastro;
     }
 
     public void setDataCadastro(Date dataCadastro) {
